@@ -31,17 +31,9 @@ function Home() {
     <Layout>
       {error && <h3>{error}</h3>}
       <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
-        {products.map(
-          ({ id, title, category: { name }, price, images: [image] }) => (
-            <Card
-              key={id}
-              title={title}
-              categoryName={name}
-              price={price}
-              image={image}
-            />
-          )
-        )}
+        {products.map((product) => (
+          <Card key={product.id} {...product} />
+        ))}
       </div>
       <ProductDetail />
     </Layout>

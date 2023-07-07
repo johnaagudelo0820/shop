@@ -20,7 +20,7 @@ const Card = ({ title, price, categoryName, image }) => {
           onClick={() => setCount((count) => count + 1)}
           className="absolute top-1 right-1 flex justify-center items-center bg-white w-5 h-5 rounded-full"
         >
-          <PlusSmallIcon />
+          <PlusSmallIcon className="h-6 w-6 text-black" />
         </div>
       </figure>
       <p className="flex justify-between">

@@ -3,12 +3,22 @@ import { createContext, useState } from 'react';
 export const ShoppingCartContext = createContext([]);
 
 export const ShoppinCartProvider = ({ children }) => {
+  // queantity product added to shopping cart
   const [count, setCount] = useState(0);
+  // Sidebar product detail
   const [isProductDetailOpen, setIsProductDetailOpen] = useState(false);
-  const [productToShow, setProductToShow] = useState(null);
+  // Information product detail selected
+  const [productToShow, setProductToShow] = useState({});
+  // Shipping cart products
+  const [cartProducts, setCartProducts] = useState([]);
+  // sidebar checkout product
+  const [isCheckoutSideMenu, setIsCheckoutSideMenu] = useState(true);
 
   const openProductDetail = () => setIsProductDetailOpen(true);
   const closeProductDetail = () => setIsProductDetailOpen(false);
+
+  const openCheckoutSideMenu = () => setIsCheckoutSideMenu(true);
+  const closeCheckoutSideMenu = () => setIsCheckoutSideMenu(false);
 
   return (
     <ShoppingCartContext.Provider
@@ -20,6 +30,11 @@ export const ShoppinCartProvider = ({ children }) => {
         closeProductDetail,
         setProductToShow,
         productToShow,
+        cartProducts,
+        setCartProducts,
+        openCheckoutSideMenu,
+        closeCheckoutSideMenu,
+        isCheckoutSideMenu,
       }}
     >
       {children}

@@ -8,6 +8,7 @@ import NotFound from '../NotFound';
 import SignIn from '../SignIn';
 import Navbar from '../../components/Navbar';
 import { ShoppinCartProvider } from '../../context';
+import ChackoutSideMenu from '../../components/CheckoutSideMenu';
 
 import './App.css';
 
@@ -29,6 +30,7 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <AppRoutes />
+        <ChackoutSideMenu />
       </BrowserRouter>
     </ShoppinCartProvider>
   );

@@ -8,6 +8,8 @@ const ProductDetail = () => {
   const { isProductDetailOpen, closeProductDetail, productToShow } =
     useContext(ShoppingCartContext);
 
+  const { title, images, description, price } = productToShow;
+  const [image] = images ?? '';
   return (
     <aside
       className={`${
@@ -22,18 +24,12 @@ const ProductDetail = () => {
         />
       </div>
       <figure className="px-6">
-        <img
-          className="w-full h-full rounded-lg"
-          src={productToShow?.images[0]}
-          alt={productToShow?.title}
-        />
+        <img className="w-full h-full rounded-lg" src={image} alt={title} />
       </figure>
       <p className="flex flex-col p-6">
-        <span className="font-medium text-2xl mb-2">
-          $ {productToShow?.price}
-        </span>
-        <span className="font-medium text-md mb-1">{productToShow?.title}</span>
-        <span className="font-light text-sm">{productToShow?.description}</span>
+        <span className="font-medium text-2xl mb-2">$ {price}</span>
+        <span className="font-medium text-md mb-1">{title}</span>
+        <span className="font-light text-sm">{description}</span>
       </p>
     </aside>
   );

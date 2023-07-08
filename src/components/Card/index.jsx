@@ -4,13 +4,26 @@ import { PlusSmallIcon } from '@heroicons/react/24/outline';
 import { ShoppingCartContext } from '../../context';
 
 const Card = (product) => {
-  const { setCount, openProductDetail, setProductToShow } =
-    useContext(ShoppingCartContext);
+  const {
+    setCount,
+    openProductDetail,
+    setProductToShow,
+    setCartProducts,
+    openCheckoutSideMenu,
+  } = useContext(ShoppingCartContext);
 
   const showProduct = (item) => {
     openProductDetail();
     setProductToShow(item);
   };
+
+  const addProductToCart = (event, productData) => {
+    event.stopPropagation();
+    setCount((count) => count + 1);
+    setCartProducts((products) => [...products, productData]);
+    openCheckoutSideMenu();
+  };
+
   return (
     <div
       className="bg-white cursor-pointer w-56 h-60 rounded-lg"
@@ -26,7 +39,7 @@ const Card = (product) => {
           alt="headphone"
         />
         <div
-          onClick={() => setCount((count) => count + 1)}
+          onClick={(event) => addProductToCart(event, product)}
           className="absolute top-1 right-1 flex justify-center items-center bg-white w-5 h-5 rounded-full"
         >
           <PlusSmallIcon className="h-6 w-6 text-black" />

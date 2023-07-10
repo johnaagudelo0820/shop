@@ -6,8 +6,17 @@ import OrderCart from '../OrderCart';
 import './styles.css';
 
 const ChackoutSideMenu = () => {
-  const { isCheckoutSideMenu, closeCheckoutSideMenu, cartProducts } =
-    useContext(ShoppingCartContext);
+  const {
+    isCheckoutSideMenu,
+    closeCheckoutSideMenu,
+    cartProducts,
+    setCartProducts,
+  } = useContext(ShoppingCartContext);
+
+  const handlerDelete = (id) => {
+    const filterProducts = cartProducts.filter((product) => product.id !== id);
+    setCartProducts(filterProducts);
+  };
 
   return (
     <aside
@@ -24,7 +33,10 @@ const ChackoutSideMenu = () => {
       </div>
       <div className="px-6 overflow-y-scroll">
         {cartProducts.map(({ id, title, price, images }) => (
-          <OrderCart key={id} {...{ title, price, imageUrl: images[0] }} />
+          <OrderCart
+            key={id}
+            {...{ id, title, price, imageUrl: images[0], handlerDelete }}
+          />
         ))}
       </div>
     </aside>

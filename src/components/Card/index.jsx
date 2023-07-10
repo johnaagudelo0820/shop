@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { PlusSmallIcon } from '@heroicons/react/24/outline';
+import { PlusSmallIcon, CheckIcon } from '@heroicons/react/24/outline';
 
 import { ShoppingCartContext } from '../../context';
 
@@ -10,7 +10,11 @@ const Card = (product) => {
     setProductToShow,
     setCartProducts,
     openCheckoutSideMenu,
+    cartProducts,
   } = useContext(ShoppingCartContext);
+
+  const isInCart =
+    cartProducts.filter(({ id }) => id === product.id).length > 0;
 
   const showProduct = (item) => {
     openProductDetail();
@@ -18,10 +22,33 @@ const Card = (product) => {
   };
 
   const addProductToCart = (event, productData) => {
+    if (isInCart) return;
     event.stopPropagation();
     setCount((count) => count + 1);
     setCartProducts((products) => [...products, productData]);
     openCheckoutSideMenu();
+  };
+
+  const renderIcon = (isInCartProduct) => {
+    if (isInCartProduct) {
+      return (
+        <div
+          onClick={(event) => addProductToCart(event, product)}
+          className="absolute top-1 right-1 flex justify-center items-center bg-lime-600 w-5 h-5 rounded-full cursor-not-allowed"
+        >
+          <CheckIcon className="h-4 w-4 text-white" />
+        </div>
+      );
+    }
+
+    return (
+      <div
+        onClick={(event) => addProductToCart(event, product)}
+        className="absolute top-1 right-1 flex justify-center items-center bg-white w-5 h-5 rounded-full"
+      >
+        <PlusSmallIcon className="h-6 w-6 text-black" />
+      </div>
+    );
   };
 
   return (
@@ -38,12 +65,7 @@ const Card = (product) => {
           src={product.images[0]}
           alt="headphone"
         />
-        <div
-          onClick={(event) => addProductToCart(event, product)}
-          className="absolute top-1 right-1 flex justify-center items-center bg-white w-5 h-5 rounded-full"
-        >
-          <PlusSmallIcon className="h-6 w-6 text-black" />
-        </div>
+        {renderIcon(isInCart)}
       </figure>
       <p className="flex justify-between">
         <span className="text-sm font-light">{product.title}</span>

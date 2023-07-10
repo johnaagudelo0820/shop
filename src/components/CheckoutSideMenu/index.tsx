@@ -1,11 +1,12 @@
 import React, { useContext } from 'react';
 import { ShoppingCartContext } from '../../context';
 import { XMarkIcon } from '@heroicons/react/24/outline';
+import OrderCart from '../OrderCart';
 
 import './styles.css';
 
 const ChackoutSideMenu = () => {
-  const { isCheckoutSideMenu, closeCheckoutSideMenu } =
+  const { isCheckoutSideMenu, closeCheckoutSideMenu, cartProducts } =
     useContext(ShoppingCartContext);
 
   return (
@@ -20,6 +21,11 @@ const ChackoutSideMenu = () => {
           className="h-6 w-6 text-black cursor-pointer"
           onClick={closeCheckoutSideMenu}
         />
+      </div>
+      <div className="px-6 overflow-y-scroll">
+        {cartProducts.map(({ id, title, price, images }) => (
+          <OrderCart key={id} {...{ title, price, imageUrl: images[0] }} />
+        ))}
       </div>
     </aside>
   );

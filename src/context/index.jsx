@@ -23,8 +23,6 @@ export const ShoppinCartProvider = ({ children }) => {
   const openCheckoutSideMenu = () => setIsCheckoutSideMenu(true);
   const closeCheckoutSideMenu = () => setIsCheckoutSideMenu(false);
 
-  console.log('order', order);
-
   return (
     <ShoppingCartContext.Provider
       value={{

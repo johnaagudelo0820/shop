@@ -4,6 +4,7 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 import OrderCart from '../OrderCart';
 
 import './styles.css';
+import { totalPrice } from '../../utils';
 
 const ChackoutSideMenu = () => {
   const {
@@ -11,11 +12,23 @@ const ChackoutSideMenu = () => {
     closeCheckoutSideMenu,
     cartProducts,
     setCartProducts,
+    setOrder,
   } = useContext(ShoppingCartContext);
 
   const handlerDelete = (id) => {
     const filterProducts = cartProducts.filter((product) => product.id !== id);
     setCartProducts(filterProducts);
+  };
+
+  const handlerCheckout = () => {
+    const orderToAdd = {
+      date: new Date(),
+      products: cartProducts,
+      totalProducts: cartProducts.length,
+      totalPrice: totalPrice(cartProducts),
+    };
+    setOrder((orders) => [...orders, orderToAdd]);
+    setCartProducts([]);
   };
 
   return (
@@ -31,13 +44,27 @@ const ChackoutSideMenu = () => {
           onClick={closeCheckoutSideMenu}
         />
       </div>
-      <div className="px-6 overflow-y-scroll">
+      <div className="px-6 overflow-y-scroll flex-1">
         {cartProducts.map(({ id, title, price, images }) => (
           <OrderCart
             key={id}
             {...{ id, title, price, imageUrl: images[0], handlerDelete }}
           />
         ))}
+      </div>
+      <div className="px-6 mb-6">
+        <p className="flex justify-between items-center mb-2">
+          <span className="font-light text-lg">Total:</span>
+          <span className="font-medium text-2xl">
+            $ {totalPrice(cartProducts)}
+          </span>
+        </p>
+        <button
+          className="w-full bg-black py-3 text-white rounded-lg mt-4"
+          onClick={() => handlerCheckout()}
+        >
+          Checkout
+        </button>
       </div>
     </aside>
   );

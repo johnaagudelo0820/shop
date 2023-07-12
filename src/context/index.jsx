@@ -14,11 +14,16 @@ export const ShoppinCartProvider = ({ children }) => {
   // sidebar checkout product
   const [isCheckoutSideMenu, setIsCheckoutSideMenu] = useState(true);
 
+  // Shopping Cart Order
+  const [order, setOrder] = useState([]);
+
   const openProductDetail = () => setIsProductDetailOpen(true);
   const closeProductDetail = () => setIsProductDetailOpen(false);
 
   const openCheckoutSideMenu = () => setIsCheckoutSideMenu(true);
   const closeCheckoutSideMenu = () => setIsCheckoutSideMenu(false);
+
+  console.log('order', order);
 
   return (
     <ShoppingCartContext.Provider
@@ -35,6 +40,8 @@ export const ShoppinCartProvider = ({ children }) => {
         openCheckoutSideMenu,
         closeCheckoutSideMenu,
         isCheckoutSideMenu,
+        order,
+        setOrder,
       }}
     >
       {children}

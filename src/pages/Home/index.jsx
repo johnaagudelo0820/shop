@@ -1,37 +1,34 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
+
 import Card from '../../components/Card';
 import Layout from '../../components/Layout';
 import ProductDetail from '../../components/ProductDetail';
-
-const API = 'https://api.escuelajs.co/api/v1';
+import { ShoppingCartContext } from '../../context';
 
 function Home() {
-  const [products, setProducts] = useState([]);
-  const [error, setError] = useState('');
-
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const request = await fetch(`${API}/products`);
-        if (request.ok) {
-          const data = await request.json();
-          setProducts(data);
-          return;
-        }
-
-        setError('Error al cargar los productos');
-      } catch (error) {
-        setError('Error al cargar los productos');
-      }
-    };
-    getProducts();
-  }, []);
+  const { productsFiltered, error, setsearchByTitle, searchByTitle } =
+    useContext(ShoppingCartContext);
 
   return (
     <Layout>
-      {error && <h3>{error}</h3>}
+      <div className="flex  justify-center w-80 relative mb-4">
+        <h1 className="font-medium text-xl">Home</h1>
+      </div>
+      <input
+        type="text"
+        placeholder="Search a product"
+        className="rounded-lg border border-black p-2 w-80 mb-4 focus:outline-none"
+        onChange={(event) => setsearchByTitle(event.target.value)}
+        value={searchByTitle}
+      />
+      {error && <h3 className="font-medium text-red-600">{error}</h3>}
+      {productsFiltered.length === 0 && (
+        <div className="flex items-center mt-3">
+          <p className="font-medium text-center">No hay productos</p>
+        </div>
+      )}
       <div className="grid gap-4 grid-cols-4 w-full max-w-screen-lg">
-        {products.map((product) => (
+        {productsFiltered.map((product) => (
           <Card key={product.id} {...product} />
         ))}
       </div>

@@ -14,6 +14,7 @@ const ChackoutSideMenu = () => {
     cartProducts,
     setCartProducts,
     setOrder,
+    setCount,
   } = useContext(ShoppingCartContext);
 
   const handlerDelete = (id) => {
@@ -31,6 +32,7 @@ const ChackoutSideMenu = () => {
     setOrder((orders) => [...orders, orderToAdd]);
     setCartProducts([]);
     closeCheckoutSideMenu();
+    setCount(0);
   };
 
   return (
